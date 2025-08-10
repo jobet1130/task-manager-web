@@ -140,6 +140,60 @@ docker-compose -f docker-compose.prod.yml --env-file .env.production up -d
 
 ## 🗃️ Database Management
 
+### Database Creation
+
+Before deploying the application, you need to create the required databases. The project includes scripts to automate this process:
+
+#### Using the Creation Scripts
+
+**For Linux/macOS:**
+```bash
+# Make script executable
+chmod +x scripts/create-databases.sh
+
+# Create databases with default settings (localhost)
+./scripts/create-databases.sh
+
+# Create databases with custom connection
+./scripts/create-databases.sh -h your-db-host -p 5432 -U postgres -W your_password
+```
+
+**For Windows (PowerShell):**
+```powershell
+# Create databases with default settings
+.\scripts\create-databases.ps1
+
+# Create databases with custom connection
+.\scripts\create-databases.ps1 -Hostname "your-db-host" -Port 5432 -Username "postgres" -Password "your_password"
+```
+
+#### Manual Database Creation
+
+If you prefer to create databases manually:
+
+```sql
+-- Connect to PostgreSQL as superuser
+psql -U postgres
+
+-- Create production database
+CREATE DATABASE taskmanager_prod WITH OWNER = postgres ENCODING = 'UTF8';
+
+-- Create staging database
+CREATE DATABASE taskmanager_staging WITH OWNER = postgres ENCODING = 'UTF8';
+
+-- Grant privileges
+GRANT ALL PRIVILEGES ON DATABASE taskmanager_prod TO postgres;
+GRANT ALL PRIVILEGES ON DATABASE taskmanager_staging TO postgres;
+```
+
+#### Database Configuration
+
+The environment files are already configured with the correct database names:
+- **Production**: `taskmanager_prod`
+- **Staging**: `taskmanager_staging`
+
+Ensure your PostgreSQL server is running and accessible before running the deployment scripts.
+
 ### Automated Backups
 
 Backups are automatically created daily in production:
@@ -279,7 +333,7 @@ docker-compose logs -f
 1. **Rollback deployment**
    ```bash
    # Pull previous image version
-   docker pull ghcr.io/your-username/task-manager-web:previous-tag
+   docker pull your-dockerhub-username/task-manager:previous-tag
    
    # Update docker-compose to use previous tag
    # Restart services
