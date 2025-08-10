@@ -1,0 +1,78 @@
+version: '3.8'
+
+services:
+  task-manager-web:
+    image: ${DOCKERHUB_USERNAME}/task-manager:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - HOSTNAME=0.0.0.0
+      # PostgreSQL Configuration
+      - DATABASE_URL=${DATABASE_URL}
+      - POSTGRES_HOST=${POSTGRES_HOST}
+      - POSTGRES_PORT=${POSTGRES_PORT}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    depends_on:
+      - postgres
+    restart: unless-stopped
+    container_name: task-manager-web-prod
+    networks:
+      - task-manager-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.task-manager.rule=Host(`your-production-domain.com`)"
+      - "traefik.http.routers.task-manager.tls=true"
+      - "traefik.http.routers.task-manager.tls.certresolver=letsencrypt"
+      - "traefik.http.services.task-manager.loadbalancer.server.port=3000"
+
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./backups:/backups
+    restart: unless-stopped
+    container_name: task-manager-postgres-prod
+    networks:
+      - task-manager-network
+    # Don't expose PostgreSQL port in production for security
+    # ports:
+    #   - "5432:5432"
+
+
+
+  # Backup service
+  postgres-backup:
+    image: postgres:15-alpine
+    depends_on:
+      - postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_HOST: postgres
+    volumes:
+      - ./backups:/backups
+      - ./scripts/backup.sh:/backup.sh
+    entrypoint: ["/bin/sh"]
+    command: ["-c", "while true; do sleep 86400; /backup.sh; done"]
+    restart: unless-stopped
+    container_name: task-manager-backup-prod
+    networks:
+      - task-manager-network
+
+networks:
+  task-manager-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+    driver: local

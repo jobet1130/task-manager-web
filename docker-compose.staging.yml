@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  task-manager-web:
+    image: ${DOCKERHUB_USERNAME}/task-manager:develop
+    ports:
+      - "3001:3000"
+    environment:
+      - NODE_ENV=staging
+      - PORT=3000
+      - HOSTNAME=0.0.0.0
+      # PostgreSQL Configuration
+      - DATABASE_URL=${DATABASE_URL}
+      - POSTGRES_HOST=${POSTGRES_HOST}
+      - POSTGRES_PORT=${POSTGRES_PORT}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    depends_on:
+      - postgres
+    restart: unless-stopped
+    container_name: task-manager-web-staging
+    networks:
+      - task-manager-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.task-manager-staging.rule=Host(`staging.your-domain.com`)"
+      - "traefik.http.routers.task-manager-staging.tls=true"
+      - "traefik.http.routers.task-manager-staging.tls.certresolver=letsencrypt"
+      - "traefik.http.services.task-manager-staging.loadbalancer.server.port=3000"
+
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5433:5432"  # Different port for staging
+    restart: unless-stopped
+    container_name: task-manager-postgres-staging
+    networks:
+      - task-manager-network
+
+
+
+networks:
+  task-manager-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+    driver: local
