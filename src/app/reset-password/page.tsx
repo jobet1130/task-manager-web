@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { AuthLayout } from '../../components/Common/UI/AuthLayout';
 import { ResetPasswordForm } from '../../components/Common/UI/ResetPasswordForm';
@@ -27,7 +27,8 @@ interface ParticleElement {
   animationDelay: number;
 }
 
-export default function ResetPasswordPage() {
+// Component that uses useSearchParams - must be wrapped in Suspense
+function ResetPasswordContent() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string>('');
   const [success, setSuccess] = useState(false);
@@ -159,5 +160,26 @@ export default function ResetPasswordPage() {
         </AuthLayout>
       </div>
     </div>
+  );
+}
+
+// Loading fallback component
+function ResetPasswordLoading() {
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-teal-900 via-cyan-900 to-blue-900 flex items-center justify-center">
+      <div className="text-white text-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white mx-auto mb-4"></div>
+        <p>Loading...</p>
+      </div>
+    </div>
+  );
+}
+
+// Main component with Suspense boundary
+export default function ResetPasswordPage() {
+  return (
+    <Suspense fallback={<ResetPasswordLoading />}>
+      <ResetPasswordContent />
+    </Suspense>
   );
 }
