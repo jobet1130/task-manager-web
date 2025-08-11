@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import Link from 'next/link';
 import { Button } from '../UI/Button';
 import { Input } from '../UI/Input';
 import { Card } from '../UI/Card';
@@ -158,7 +159,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
               />
               <span className="ml-2 text-sm text-gray-200 group-hover:text-white transition-colors">Remember me</span>
             </label>
-            <a href="#" className="text-sm text-blue-300 hover:text-blue-200 transition-colors">
+            <a href="/forgot-password" className="text-sm text-blue-300 hover:text-blue-200 transition-colors">
               Forgot password?
             </a>
           </div>
@@ -173,9 +174,9 @@ export const LoginForm: React.FC<LoginFormProps> = ({
 
           <div className="text-center">
             <span className="text-gray-300">Don&apos;t have an account? </span>
-            <a href="#" className="text-blue-300 hover:text-blue-200 transition-colors">
+            <Link href="/register" className="text-blue-300 hover:text-blue-200 transition-colors">
               Sign up
-            </a>
+            </Link>
           </div>
         </form>
       </Card>
