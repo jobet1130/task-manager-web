@@ -2,26 +2,12 @@
 
 import React from 'react';
 import { Card } from '@/components/Common/UI/Card';
-import { Button } from '@/components/Common/UI/Button';
 import { TaskCreateButton } from '@/components/Common/UI/TaskCreateButton';
 import { ProjectCreateButton } from '../Common/UI/ProjectCreateButton';
+import { InviteTeamButton } from '../Common/UI/InviteTeamButton';
+import { ViewReportsButton } from '../Common/UI/ViewReport';
 
 export function QuickActions() {
-  const actions = [
-    {
-      title: 'Invite Team',
-      description: 'Add team members',
-      icon: '👥',
-      color: 'bg-purple-500 hover:bg-purple-600'
-    },
-    {
-      title: 'View Reports',
-      description: 'Check project analytics',
-      icon: '📊',
-      color: 'bg-orange-500 hover:bg-orange-600'
-    }
-  ];
-
   return (
     <Card className="p-6">
       <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h3>
@@ -36,7 +22,7 @@ export function QuickActions() {
           />
         </div>
         
-        {/* Create Project Button - Now Functional */}
+        {/* Create Project Button - Functional */}
         <div className="w-full">
           <ProjectCreateButton 
             onProjectCreated={() => {
@@ -46,24 +32,23 @@ export function QuickActions() {
           />
         </div>
         
-        {/* Other Action Buttons */}
-        {actions.map((action, index) => (
-          <Button
-            key={index}
+        {/* Invite Team Button - Now Functional with Centered Text */}
+        <div className="w-full">
+          <InviteTeamButton 
             variant="ghost"
-            className="w-full justify-start p-4 h-auto text-left hover:bg-gray-50"
-          >
-            <div className="flex items-center space-x-3">
-              <div className={`w-10 h-10 rounded-lg ${action.color} flex items-center justify-center text-white`}>
-                <span className="text-lg">{action.icon}</span>
-              </div>
-              <div>
-                <p className="font-medium text-gray-900">{action.title}</p>
-                <p className="text-sm text-gray-600">{action.description}</p>
-              </div>
-            </div>
-          </Button>
-        ))}
+            className="w-full h-12 bg-gradient-to-r from-purple-500 to-blue-600 text-white border-0 shadow-lg hover:from-purple-600 hover:to-blue-700"
+          />
+        </div>
+        
+        {/* View Reports Button - Now Functional */}
+        <div className="w-full">
+          <ViewReportsButton 
+            onReportsViewed={() => {
+              console.log('Reports viewed from QuickActions!');
+            }}
+            variant="ghost"
+          />
+        </div>
       </div>
     </Card>
   );

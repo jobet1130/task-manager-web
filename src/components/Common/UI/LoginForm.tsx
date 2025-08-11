@@ -68,7 +68,8 @@ export const LoginForm: React.FC<LoginFormProps> = ({
     if (validateForm()) {
       try {
         await onSubmit(formData);
-      } catch (error) {
+      } catch (err: unknown) {
+        console.error('Login error:', err);
         // Show modal for authentication errors
         setShowErrorModal(true);
       }
