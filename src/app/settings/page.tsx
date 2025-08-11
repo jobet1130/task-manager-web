@@ -7,6 +7,7 @@ import { ProfileSettings } from '@/components/Settings/ProfileSettings';
 import { SecuritySettings } from '@/components/Settings/SecuritySettings';
 import { PreferencesSettings } from '@/components/Settings/PreferencesSettings';
 import { BackToDashboardButton } from '@/components/Common/UI/BackToDashboardButton';
+import { useTheme } from '@/context/ThemeContext';
 
 type SettingsTab = 'appearance' | 'notifications' | 'profile' | 'security' | 'preferences';
 
@@ -19,6 +20,8 @@ interface TabConfig {
 
 export default function SettingsPage() {
   const [activeTab, setActiveTab] = useState<SettingsTab>('appearance');
+  const { settings, isDark } = useTheme();
+  const { accentColor, fontSize, animations } = settings;
 
   const tabs: TabConfig[] = [
     {
@@ -75,13 +78,25 @@ export default function SettingsPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+    <div className={`min-h-screen ${
+      isDark 
+        ? 'bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900' 
+        : 'bg-gradient-to-br from-gray-50 via-white to-gray-100'
+    } accent-${accentColor} ${
+      fontSize === 'small' ? 'text-sm' : fontSize === 'large' ? 'text-lg' : 'text-base'
+    } ${!animations ? 'no-animations' : ''}`}>
       {/* Header */}
-      <div className="bg-black/20 backdrop-blur-sm border-b border-white/10">
+      <div className={`${
+        isDark 
+          ? 'bg-black/20 backdrop-blur-sm border-b border-white/10' 
+          : 'bg-white/20 backdrop-blur-sm border-b border-gray-200/50'
+      }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center space-x-4">
-              <h1 className="text-2xl font-bold text-white">Settings</h1>
+              <h1 className={`text-2xl font-bold ${
+                isDark ? 'text-white' : 'text-gray-900'
+              }`}>Settings</h1>
             </div>
             <BackToDashboardButton variant="compact" />
           </div>
@@ -99,11 +114,18 @@ export default function SettingsPage() {
                   onClick={() => setActiveTab(tab.id)}
                   className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left transition-all duration-200 ${
                     activeTab === tab.id
-                      ? 'bg-gradient-to-r from-blue-500/20 to-purple-600/20 text-white border border-blue-500/30'
-                      : 'text-white/70 hover:text-white hover:bg-white/5 border border-transparent'
+                      ? isDark
+                        ? 'bg-gradient-to-r from-blue-500/20 to-purple-600/20 text-white border border-blue-500/30'
+                        : 'bg-gradient-to-r from-blue-500/10 to-purple-600/10 text-gray-900 border border-blue-500/20'
+                      : isDark
+                        ? 'text-white/70 hover:text-white hover:bg-white/5 border border-transparent'
+                        : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100/50 border border-transparent'
                   }`}
                 >
-                  <span className={activeTab === tab.id ? 'text-blue-400' : 'text-white/60'}>
+                  <span className={activeTab === tab.id 
+                    ? isDark ? 'text-blue-400' : 'text-blue-600'
+                    : isDark ? 'text-white/60' : 'text-gray-500'
+                  }>
                     {tab.icon}
                   </span>
                   <span className="font-medium">{tab.label}</span>
@@ -114,7 +136,11 @@ export default function SettingsPage() {
 
           {/* Main Content */}
           <div className="flex-1 min-w-0">
-            <div className="bg-black/20 backdrop-blur-sm rounded-xl border border-white/10 p-6">
+            <div className={`${
+              isDark 
+                ? 'bg-black/20 backdrop-blur-sm rounded-xl border border-white/10' 
+                : 'bg-white/50 backdrop-blur-sm rounded-xl border border-gray-200/50 shadow-lg'
+            } p-6`}>
               {tabs.find(tab => tab.id === activeTab)?.component}
             </div>
           </div>

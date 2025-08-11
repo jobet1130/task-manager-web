@@ -45,48 +45,7 @@ function ActivityItem({ activity }: { activity: Activity }) {
 
 export function RecentActivity() {
   const { isDark } = useTheme();
-  const activities: Activity[] = [
-    {
-      id: '1',
-      type: 'task_completed',
-      message: 'Completed "Update user authentication system"',
-      user: 'You',
-      timestamp: '2 hours ago',
-      icon: '✅'
-    },
-    {
-      id: '2',
-      type: 'comment_added',
-      message: 'Added comment to "Design new dashboard layout"',
-      user: 'John Doe',
-      timestamp: '4 hours ago',
-      icon: '💬'
-    },
-    {
-      id: '3',
-      type: 'task_created',
-      message: 'Created new task "Fix mobile responsive issues"',
-      user: 'Jane Smith',
-      timestamp: '6 hours ago',
-      icon: '➕'
-    },
-    {
-      id: '4',
-      type: 'project_updated',
-      message: 'Updated project "TaskFlow Web App" settings',
-      user: 'You',
-      timestamp: '1 day ago',
-      icon: '📝'
-    },
-    {
-      id: '5',
-      type: 'task_completed',
-      message: 'Completed "Write API documentation"',
-      user: 'Mike Johnson',
-      timestamp: '2 days ago',
-      icon: '✅'
-    }
-  ];
+  const activities: Activity[] = []; // Empty activities array
 
   return (
     <Card className={isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}>
@@ -94,11 +53,17 @@ export function RecentActivity() {
         <h3 className={`text-lg font-semibold mb-4 ${
           isDark ? 'text-white' : 'text-gray-900'
         }`}>Recent Activity</h3>
-        <div className="space-y-1">
-          {activities.map((activity) => (
-            <ActivityItem key={activity.id} activity={activity} />
-          ))}
-        </div>
+        {activities.length === 0 ? (
+          <div className={`text-center py-8 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+            <p>No recent activity</p>
+          </div>
+        ) : (
+          <div className="space-y-1">
+            {activities.map((activity) => (
+              <ActivityItem key={activity.id} activity={activity} />
+            ))}
+          </div>
+        )}
       </div>
     </Card>
   );
