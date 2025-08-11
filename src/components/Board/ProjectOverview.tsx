@@ -3,6 +3,7 @@
 import React from 'react';
 import { Card } from '@/components/Common/UI/Card';
 import { Button } from '@/components/Common/UI/Button';
+import { useTheme } from '@/context/ThemeContext';
 
 interface Project {
   id: string;
@@ -16,27 +17,41 @@ interface Project {
 }
 
 function ProjectCard({ project }: { project: Project }) {
+  const { isDark } = useTheme();
+  
   return (
-    <div className="p-4 border border-gray-200 rounded-lg hover:shadow-md transition-shadow">
+    <div className={`p-4 border rounded-lg hover:shadow-md transition-shadow ${
+      isDark ? 'border-gray-700 bg-gray-800' : 'border-gray-200 bg-white'
+    }`}>
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center space-x-3">
           <div 
             className="w-4 h-4 rounded-full"
             style={{ backgroundColor: project.color }}
           />
-          <h4 className="font-medium text-gray-900">{project.name}</h4>
+          <h4 className={`font-medium ${
+            isDark ? 'text-white' : 'text-gray-900'
+          }`}>{project.name}</h4>
         </div>
-        <span className="text-sm text-gray-500">{project.dueDate}</span>
+        <span className={`text-sm ${
+          isDark ? 'text-gray-400' : 'text-gray-500'
+        }`}>{project.dueDate}</span>
       </div>
       
-      <p className="text-sm text-gray-600 mb-3">{project.description}</p>
+      <p className={`text-sm mb-3 ${
+        isDark ? 'text-gray-300' : 'text-gray-600'
+      }`}>{project.description}</p>
       
       <div className="space-y-2">
         <div className="flex justify-between text-sm">
-          <span className="text-gray-600">Progress</span>
-          <span className="font-medium">{project.progress}%</span>
+          <span className={isDark ? 'text-gray-300' : 'text-gray-600'}>Progress</span>
+          <span className={`font-medium ${
+            isDark ? 'text-white' : 'text-gray-900'
+          }`}>{project.progress}%</span>
         </div>
-        <div className="w-full bg-gray-200 rounded-full h-2">
+        <div className={`w-full rounded-full h-2 ${
+          isDark ? 'bg-gray-700' : 'bg-gray-200'
+        }`}>
           <div 
             className="h-2 rounded-full transition-all duration-300"
             style={{ 
@@ -45,7 +60,9 @@ function ProjectCard({ project }: { project: Project }) {
             }}
           />
         </div>
-        <div className="flex justify-between text-xs text-gray-500">
+        <div className={`flex justify-between text-xs ${
+          isDark ? 'text-gray-400' : 'text-gray-500'
+        }`}>
           <span>{project.completedTasks}/{project.totalTasks} tasks</span>
           <span>{project.totalTasks - project.completedTasks} remaining</span>
         </div>
@@ -55,6 +72,7 @@ function ProjectCard({ project }: { project: Project }) {
 }
 
 export function ProjectsOverview() {
+  const { isDark } = useTheme();
   const projects: Project[] = [
     {
       id: '1',
@@ -89,17 +107,21 @@ export function ProjectsOverview() {
   ];
 
   return (
-    <Card className="p-6">
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold text-gray-900">Active Projects</h3>
-        <Button variant="ghost" size="sm">
-          View All
-        </Button>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {projects.map((project) => (
-          <ProjectCard key={project.id} project={project} />
-        ))}
+    <Card className={isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}>
+      <div className="p-6">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className={`text-lg font-semibold ${
+            isDark ? 'text-white' : 'text-gray-900'
+          }`}>Active Projects</h3>
+          <Button variant="ghost" size="sm">
+            View All
+          </Button>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {projects.map((project) => (
+            <ProjectCard key={project.id} project={project} />
+          ))}
+        </div>
       </div>
     </Card>
   );

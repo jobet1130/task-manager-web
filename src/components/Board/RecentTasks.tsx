@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Card } from '@/components/Common/UI/Card';
-import { Button } from '@/components/Common/UI/Button';
+import { useTheme } from '@/context/ThemeContext';
 
 interface Task {
   id: string;
@@ -15,6 +15,7 @@ interface Task {
 }
 
 function TaskItem({ task }: { task: Task }) {
+  const { isDark } = useTheme();
   const priorityColors = {
     low: 'bg-gray-100 text-gray-800',
     medium: 'bg-blue-100 text-blue-800',
@@ -30,10 +31,10 @@ function TaskItem({ task }: { task: Task }) {
   };
 
   return (
-    <div className="flex items-center justify-between p-4 border-b border-gray-100 last:border-b-0">
+    <div className={`flex items-center justify-between p-4 border-b ${isDark ? 'border-gray-700' : 'border-gray-100'} last:border-b-0`}>
       <div className="flex-1">
-        <h4 className="font-medium text-gray-900">{task.title}</h4>
-        <p className="text-sm text-gray-600 mt-1">{task.project}</p>
+        <h4 className={`font-medium ${isDark ? 'text-white' : 'text-gray-900'}`}>{task.title}</h4>
+        <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'} mt-1`}>{task.project}</p>
         <div className="flex items-center space-x-2 mt-2">
           <span className={`px-2 py-1 rounded-full text-xs font-medium ${priorityColors[task.priority]}`}>
             {task.priority}
@@ -44,14 +45,15 @@ function TaskItem({ task }: { task: Task }) {
         </div>
       </div>
       <div className="text-right">
-        <p className="text-sm text-gray-600">{task.dueDate}</p>
-        <p className="text-xs text-gray-500 mt-1">{task.assignee}</p>
+        <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{task.dueDate}</p>
+        <p className={`text-xs ${isDark ? 'text-gray-500' : 'text-gray-500'} mt-1`}>{task.assignee}</p>
       </div>
     </div>
   );
 }
 
 export function RecentTasks() {
+  const { isDark } = useTheme();
   const tasks: Task[] = [
     {
       id: '1',
@@ -92,15 +94,12 @@ export function RecentTasks() {
   ];
 
   return (
-    <Card className="p-6">
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold text-gray-900">Recent Tasks</h3>
-        <Button variant="ghost" size="sm">
-          View All
-        </Button>
+    <Card className={`${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
+      <div className="p-6 border-b border-gray-100">
+        <h2 className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>Recent Tasks</h2>
       </div>
-      <div className="space-y-0">
-        {tasks.map((task) => (
+      <div className="divide-y divide-gray-100">
+        {tasks.map(task => (
           <TaskItem key={task.id} task={task} />
         ))}
       </div>

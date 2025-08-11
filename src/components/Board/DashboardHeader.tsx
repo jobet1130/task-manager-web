@@ -1,8 +1,10 @@
 'use client';
 
 import React from 'react';
+import { useTheme } from '@/context/ThemeContext';
 
 export function DashboardHeader() {
+  const { isDark } = useTheme();
   const currentDate = new Date().toLocaleDateString('en-US', {
     weekday: 'long',
     year: 'numeric',
@@ -11,19 +13,19 @@ export function DashboardHeader() {
   });
 
   return (
-    <div className="bg-white rounded-lg shadow-sm p-6">
+    <div className={`${isDark ? 'bg-gray-800' : 'bg-white'} rounded-lg shadow-sm p-6`}>
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Good morning! 👋</h1>
-          <p className="text-gray-600 mt-1">{currentDate}</p>
+          <h1 className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'}`}>Good morning! 👋</h1>
+          <p className={`${isDark ? 'text-gray-300' : 'text-gray-600'} mt-1`}>{currentDate}</p>
         </div>
         <div className="text-right">
-          <p className="text-sm text-gray-500">Today&apos;s Progress</p>
+          <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Today&apos;s Progress</p>
           <div className="flex items-center mt-1">
-            <div className="w-32 bg-gray-200 rounded-full h-2 mr-3">
-              <div className="bg-blue-500 h-2 rounded-full" style={{ width: '65%' }}></div>
+            <div className={`w-32 ${isDark ? 'bg-gray-700' : 'bg-gray-200'} rounded-full h-2 mr-3`}>
+              <div className="bg-primary h-2 rounded-full" style={{ width: '65%' }}></div>
             </div>
-            <span className="text-sm font-medium text-gray-700">65%</span>
+            <span className={`text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>65%</span>
           </div>
         </div>
       </div>
