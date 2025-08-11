@@ -158,7 +158,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
               />
               <span className="ml-2 text-sm text-gray-200 group-hover:text-white transition-colors">Remember me</span>
             </label>
-            <a href="#" className="text-sm text-blue-300 hover:text-blue-200 transition-colors">
+            <a href="/forgot-password" className="text-sm text-blue-300 hover:text-blue-200 transition-colors">
               Forgot password?
             </a>
           </div>
