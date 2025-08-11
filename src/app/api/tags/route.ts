@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { query } from '@/lib/db';
 import { withErrorHandler } from '@/lib/errorHandler';
-import { ValidationError, NotFoundError } from '@/lib/exceptions';
+import { ValidationError  } from '@/lib/exceptions';
 
 // GET /api/tags - Get all tags
 async function getTags(request: NextRequest) {

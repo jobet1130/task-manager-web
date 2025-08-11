@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { query } from '@/lib/db';
 import { withErrorHandlerParams } from '@/lib/errorHandler';
-import { ValidationError, NotFoundError } from '@/lib/exceptions';
+import { NotFoundError } from '@/lib/exceptions';
 
 // GET /api/projects/[id] - Get a specific project
 async function getProject(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: { id: string } }
 ) {
     const { id } = params;

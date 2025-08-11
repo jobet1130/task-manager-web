@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { query } from '@/lib/db';
 import { withErrorHandlerParams } from '@/lib/errorHandler';
-import { ValidationError, NotFoundError } from '@/lib/exceptions';
+import {  NotFoundError } from '@/lib/exceptions';
 
 // GET /api/profiles/[id] - Get a specific profile
 async function getProfile(
@@ -64,7 +64,7 @@ export const PUT = withErrorHandlerParams(updateProfile);
 
 // DELETE /api/profiles/[id] - Delete a profile
 async function deleteProfile(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: { id: string } }
 ) {
     const { id } = params;

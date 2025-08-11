@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { query } from '@/lib/db';
 import { withErrorHandler } from '@/lib/errorHandler';
-import { ValidationError, NotFoundError } from '@/lib/exceptions';
+import { ValidationError } from '@/lib/exceptions';
 
 // GET /api/profiles - Get all profiles
 async function getProfiles(request: NextRequest) {

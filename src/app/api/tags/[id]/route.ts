@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { query } from '@/lib/db';
 import { withErrorHandlerParams } from '@/lib/errorHandler';
-import { ValidationError, NotFoundError } from '@/lib/exceptions';
+import {  NotFoundError } from '@/lib/exceptions';
 
 // GET /api/tags/[id] - Get a specific tag
 async function getTag(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: { id: string } }
 ) {
     const { id } = params;
