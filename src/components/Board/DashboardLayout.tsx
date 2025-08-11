@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { Sidebar } from './Sidebar';
 import { TopNavbar } from './TopNavbar';
+import { useTheme } from '@/context/ThemeContext';
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -10,9 +11,11 @@ interface DashboardLayoutProps {
 
 export function DashboardLayout({ children }: DashboardLayoutProps) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { settings, isDark } = useTheme();
+  const { accentColor, fontSize, animations } = settings;
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className={`min-h-screen ${isDark ? 'bg-gray-900' : 'bg-gray-50'} accent-${accentColor} ${fontSize === 'small' ? 'text-sm' : fontSize === 'large' ? 'text-lg' : 'text-base'} ${!animations ? 'no-animations' : ''}`}>
       {/* Mobile sidebar overlay */}
       {sidebarOpen && (
         <div 

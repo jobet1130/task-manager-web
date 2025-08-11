@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { Card } from '@/components/Common/UI/Card';
+import { useTheme } from '@/context/ThemeContext';
 
 interface StatCardProps {
   title: string;
@@ -12,18 +13,19 @@ interface StatCardProps {
 }
 
 function StatCard({ title, value, icon, change, changeType = 'neutral' }: StatCardProps) {
+  const { isDark } = useTheme();
   const changeColor = {
     positive: 'text-green-600',
     negative: 'text-red-600',
-    neutral: 'text-gray-600'
+    neutral: isDark ? 'text-gray-400' : 'text-gray-600'
   }[changeType];
 
   return (
-    <Card className="p-6">
+    <Card className={`p-6 ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-sm font-medium text-gray-600">{title}</p>
-          <p className="text-2xl font-bold text-gray-900 mt-1">{value}</p>
+          <p className={`text-sm font-medium ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>{title}</p>
+          <p className={`text-2xl font-bold ${isDark ? 'text-white' : 'text-gray-900'} mt-1`}>{value}</p>
           {change && (
             <p className={`text-sm mt-1 ${changeColor}`}>{change}</p>
           )}

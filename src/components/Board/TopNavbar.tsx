@@ -1,8 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Button } from '@/components/Common/UI/Button';
 import { NotificationModal } from '@/components/Modals/NotificationModal';
+import { useTheme } from '@/context/ThemeContext';
 
 interface Notification {
   id: string;
@@ -19,6 +21,8 @@ interface TopNavbarProps {
 }
 
 export function TopNavbar({ onMenuClick }: TopNavbarProps) {
+  const router = useRouter();
+  const { isDark } = useTheme();
   const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
   
   // Move notifications state to TopNavbar
@@ -60,9 +64,13 @@ export function TopNavbar({ onMenuClick }: TopNavbarProps) {
   // Calculate unread count from actual notifications
   const unreadCount = notifications.filter(n => !n.read).length;
 
+  const handleSettingsClick = () => {
+    router.push('/settings');
+  };
+
   return (
     <>
-      <div className="bg-white shadow-sm border-b border-gray-200">
+      <div className={`${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} shadow-sm border-b`}>
         <div className="flex items-center justify-between px-6 py-4">
           {/* Mobile menu button */}
           <Button
@@ -80,10 +88,14 @@ export function TopNavbar({ onMenuClick }: TopNavbarProps) {
               <input
                 type="text"
                 placeholder="Search tasks, projects..."
-                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className={`w-full pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent ${
+                  isDark 
+                    ? 'bg-gray-700 border-gray-600 text-white placeholder-gray-400' 
+                    : 'bg-white border-gray-300 text-gray-900 placeholder-gray-500'
+                }`}
               />
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <span className="text-gray-400">🔍</span>
+                <span className={isDark ? 'text-gray-400' : 'text-gray-400'}>🔍</span>
               </div>
             </div>
           </div>
@@ -93,7 +105,9 @@ export function TopNavbar({ onMenuClick }: TopNavbarProps) {
             {/* Notification Bell */}
             <button 
               onClick={() => setIsNotificationModalOpen(true)}
-              className="relative text-gray-400 hover:text-gray-600 transition-colors"
+              className={`relative transition-colors ${
+                isDark ? 'text-gray-400 hover:text-gray-200' : 'text-gray-400 hover:text-gray-600'
+              }`}
             >
               <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
@@ -106,7 +120,13 @@ export function TopNavbar({ onMenuClick }: TopNavbarProps) {
             </button>
             
             {/* Settings */}
-            <button className="text-gray-400 hover:text-gray-600 transition-colors">
+            <button 
+              onClick={handleSettingsClick}
+              className={`transition-colors ${
+                isDark ? 'text-gray-400 hover:text-gray-200' : 'text-gray-400 hover:text-gray-600'
+              }`}
+              title="Settings"
+            >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
