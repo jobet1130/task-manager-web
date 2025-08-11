@@ -54,54 +54,23 @@ function TaskItem({ task }: { task: Task }) {
 
 export function RecentTasks() {
   const { isDark } = useTheme();
-  const tasks: Task[] = [
-    {
-      id: '1',
-      title: 'Update user authentication system',
-      project: 'TaskFlow Web App',
-      priority: 'high',
-      status: 'in_progress',
-      dueDate: 'Today',
-      assignee: 'You'
-    },
-    {
-      id: '2',
-      title: 'Design new dashboard layout',
-      project: 'TaskFlow Web App',
-      priority: 'medium',
-      status: 'review',
-      dueDate: 'Tomorrow',
-      assignee: 'John Doe'
-    },
-    {
-      id: '3',
-      title: 'Fix mobile responsive issues',
-      project: 'TaskFlow Mobile',
-      priority: 'urgent',
-      status: 'todo',
-      dueDate: 'Dec 15',
-      assignee: 'Jane Smith'
-    },
-    {
-      id: '4',
-      title: 'Write API documentation',
-      project: 'TaskFlow API',
-      priority: 'low',
-      status: 'done',
-      dueDate: 'Dec 10',
-      assignee: 'You'
-    }
-  ];
+  const tasks: Task[] = []; // Empty tasks array
 
   return (
     <Card className={`${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
-      <div className="p-6 border-b border-gray-100">
+      <div className="p-6">
         <h2 className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>Recent Tasks</h2>
-      </div>
-      <div className="divide-y divide-gray-100">
-        {tasks.map(task => (
-          <TaskItem key={task.id} task={task} />
-        ))}
+        {tasks.length === 0 ? (
+          <div className={`text-center py-8 ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
+            <p>No recent tasks</p>
+          </div>
+        ) : (
+          <div className="divide-y divide-gray-100">
+            {tasks.map(task => (
+              <TaskItem key={task.id} task={task} />
+            ))}
+          </div>
+        )}
       </div>
     </Card>
   );

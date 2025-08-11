@@ -12,6 +12,11 @@ export function DashboardHeader() {
     day: 'numeric'
   });
 
+  // Calculate progress based on actual data (0% when no tasks)
+  const totalTasks = 0; // Empty since we cleared the dashboard
+  const completedTasks = 0;
+  const progressPercentage = totalTasks > 0 ? Math.round((completedTasks / totalTasks) * 100) : 0;
+
   return (
     <div className={`${isDark ? 'bg-gray-800' : 'bg-white'} rounded-lg shadow-sm p-6`}>
       <div className="flex items-center justify-between">
@@ -23,9 +28,9 @@ export function DashboardHeader() {
           <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>Today&apos;s Progress</p>
           <div className="flex items-center mt-1">
             <div className={`w-32 ${isDark ? 'bg-gray-700' : 'bg-gray-200'} rounded-full h-2 mr-3`}>
-              <div className="bg-primary h-2 rounded-full" style={{ width: '65%' }}></div>
+              <div className="bg-primary h-2 rounded-full" style={{ width: `${progressPercentage}%` }}></div>
             </div>
-            <span className={`text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>65%</span>
+            <span className={`text-sm font-medium ${isDark ? 'text-gray-300' : 'text-gray-700'}`}>{progressPercentage}%</span>
           </div>
         </div>
       </div>

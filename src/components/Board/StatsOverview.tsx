@@ -40,30 +40,30 @@ export function StatsOverview() {
   const stats = [
     {
       title: 'Total Tasks',
-      value: 24,
+      value: 0,
       icon: '📋',
-      change: '+3 from yesterday',
-      changeType: 'positive' as const
+      change: 'No tasks yet',
+      changeType: 'neutral' as const
     },
     {
       title: 'Completed',
-      value: 18,
+      value: 0,
       icon: '✅',
-      change: '+5 from yesterday',
-      changeType: 'positive' as const
+      change: 'No completed tasks',
+      changeType: 'neutral' as const
     },
     {
       title: 'In Progress',
-      value: 4,
+      value: 0,
       icon: '⏳',
-      change: '-2 from yesterday',
-      changeType: 'negative' as const
+      change: 'No tasks in progress',
+      changeType: 'neutral' as const
     },
     {
       title: 'Overdue',
-      value: 2,
+      value: 0,
       icon: '⚠️',
-      change: 'Same as yesterday',
+      change: 'No overdue tasks',
       changeType: 'neutral' as const
     }
   ];

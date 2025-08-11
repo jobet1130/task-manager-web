@@ -26,40 +26,7 @@ export function TopNavbar({ onMenuClick }: TopNavbarProps) {
   const [isNotificationModalOpen, setIsNotificationModalOpen] = useState(false);
   
   // Move notifications state to TopNavbar
-  const [notifications, setNotifications] = useState<Notification[]>([
-    {
-      id: '1',
-      title: 'Task Assigned',
-      message: 'You have been assigned to "Implement user authentication"',
-      type: 'info',
-      timestamp: new Date(Date.now() - 5 * 60 * 1000), // 5 minutes ago
-      read: false
-    },
-    {
-      id: '2',
-      title: 'Project Updated',
-      message: 'TaskFlow Dashboard project has been updated by John Doe',
-      type: 'success',
-      timestamp: new Date(Date.now() - 30 * 60 * 1000), // 30 minutes ago
-      read: false
-    },
-    {
-      id: '3',
-      title: 'Deadline Approaching',
-      message: 'Task "Design system components" is due in 2 hours',
-      type: 'warning',
-      timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000), // 2 hours ago
-      read: true
-    },
-    {
-      id: '4',
-      title: 'Team Invitation',
-      message: 'Sarah Wilson invited you to join "Mobile App Development" project',
-      type: 'info',
-      timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000), // 1 day ago
-      read: true
-    }
-  ]);
+  const [notifications, setNotifications] = useState<Notification[]>([]);
   
   // Calculate unread count from actual notifications
   const unreadCount = notifications.filter(n => !n.read).length;
