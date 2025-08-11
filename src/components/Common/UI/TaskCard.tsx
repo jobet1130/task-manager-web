@@ -7,6 +7,7 @@ interface Task {
   title: string;
   description?: string;
   priority: 'low' | 'medium' | 'high' | 'urgent';
+  status: 'todo' | 'in_progress' | 'review' | 'done';
   assignedTo?: string;
   dueDate?: string;
   tags?: string[];

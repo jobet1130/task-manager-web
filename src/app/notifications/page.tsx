@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+
 import { Button } from '@/components/Common/UI/Button';
 import { BackToDashboardButton } from '@/components/Common/UI/BackToDashboardButton';
 
@@ -15,41 +16,51 @@ interface Notification {
 }
 
 const NotificationsPage: React.FC = () => {
-  // Sample notifications data - replace with actual data fetching
-  const [notifications, setNotifications] = useState<Notification[]>([
-    {
-      id: '1',
-      title: 'Task Completed',
-      message: 'Your task "Design Homepage" has been completed successfully.',
-      type: 'success',
-      timestamp: new Date(Date.now() - 1000 * 60 * 30), // 30 minutes ago
-      read: false,
-    },
-    {
-      id: '2',
-      title: 'New Comment',
-      message: 'John Doe commented on your task "Fix Login Bug".',
-      type: 'info',
-      timestamp: new Date(Date.now() - 1000 * 60 * 60 * 2), // 2 hours ago
-      read: false,
-    },
-    {
-      id: '3',
-      title: 'Deadline Approaching',
-      message: 'Task "Update Documentation" is due in 2 hours.',
-      type: 'warning',
-      timestamp: new Date(Date.now() - 1000 * 60 * 60 * 4), // 4 hours ago
-      read: true,
-    },
-    {
-      id: '4',
-      title: 'Task Overdue',
-      message: 'Task "Review Code" is now overdue.',
-      type: 'error',
-      timestamp: new Date(Date.now() - 1000 * 60 * 60 * 24), // 1 day ago
-      read: true,
-    },
-  ]);
+  const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+    // Move the sample data initialization to useEffect
+    setNotifications([
+      {
+        id: '1',
+        title: 'Task Completed',
+        message: 'Your task "Design Homepage" has been completed successfully.',
+        type: 'success',
+        timestamp: new Date(Date.now() - 1000 * 60 * 30), // 30 minutes ago
+        read: false,
+      },
+      {
+        id: '2',
+        title: 'New Comment',
+        message: 'John Doe commented on your task "Fix Login Bug".',
+        type: 'info',
+        timestamp: new Date(Date.now() - 1000 * 60 * 60 * 2), // 2 hours ago
+        read: false,
+      },
+      {
+        id: '3',
+        title: 'Deadline Approaching',
+        message: 'Task "Update Documentation" is due in 2 hours.',
+        type: 'warning',
+        timestamp: new Date(Date.now() - 1000 * 60 * 60 * 4), // 4 hours ago
+        read: true,
+      },
+      {
+        id: '4',
+        title: 'Task Overdue',
+        message: 'Task "Review Code" is now overdue.',
+        type: 'error',
+        timestamp: new Date(Date.now() - 1000 * 60 * 60 * 24), // 1 day ago
+        read: true,
+      },
+    ]);
+  }, []);
+
+  if (!mounted) {
+    return <div>Loading...</div>;
+  }
 
   const markAsRead = (id: string) => {
     setNotifications(prev => 
