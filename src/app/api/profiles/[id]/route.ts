@@ -5,7 +5,7 @@ import { NotFoundError } from '@/lib/exceptions';
 
 // GET /api/profiles/[id] - Get a specific profile
 async function getProfile(
-  request: NextRequest,
+  _request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
     const { id } = await params;
