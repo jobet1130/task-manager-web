@@ -15,10 +15,10 @@ interface ThemeSettings {
 
 interface ThemeContextType {
   settings: ThemeSettings;
-  updateTheme: (theme: Theme) => void;
-  updateAccentColor: (color: AccentColor) => void;
-  updateFontSize: (size: FontSize) => void;
-  updateAnimations: (enabled: boolean) => void;
+  updateTheme: (theme: Theme, onSuccess?: (type: string) => void) => void;
+  updateAccentColor: (color: AccentColor, onSuccess?: (type: string) => void) => void;
+  updateFontSize: (size: FontSize, onSuccess?: (type: string) => void) => void;
+  updateAnimations: (enabled: boolean, onSuccess?: (type: string) => void) => void;
   isDark: boolean;
 }
 
@@ -52,8 +52,11 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
       animations: savedAnimations,
     });
 
-    // Apply theme immediately
+    // Apply all settings immediately
     applyTheme(savedTheme);
+    applyAccentColor(savedAccentColor);
+    applyFontSize(savedFontSize);
+    applyAnimations(savedAnimations);
   }, []);
 
   const applyTheme = (theme: Theme) => {
@@ -118,28 +121,32 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
     root.classList.toggle('no-animations', !enabled);
   };
 
-  const updateTheme = (theme: Theme) => {
+  const updateTheme = (theme: Theme, onSuccess?: (type: string) => void) => {
     setSettings(prev => ({ ...prev, theme }));
     localStorage.setItem('theme', theme);
     applyTheme(theme);
+    onSuccess?.('theme');
   };
 
-  const updateAccentColor = (accentColor: AccentColor) => {
+  const updateAccentColor = (accentColor: AccentColor, onSuccess?: (type: string) => void) => {
     setSettings(prev => ({ ...prev, accentColor }));
     localStorage.setItem('accentColor', accentColor);
     applyAccentColor(accentColor);
+    onSuccess?.('accentColor');
   };
 
-  const updateFontSize = (fontSize: FontSize) => {
+  const updateFontSize = (fontSize: FontSize, onSuccess?: (type: string) => void) => {
     setSettings(prev => ({ ...prev, fontSize }));
     localStorage.setItem('fontSize', fontSize);
     applyFontSize(fontSize);
+    onSuccess?.('fontSize');
   };
 
-  const updateAnimations = (animations: boolean) => {
+  const updateAnimations = (animations: boolean, onSuccess?: (type: string) => void) => {
     setSettings(prev => ({ ...prev, animations }));
     localStorage.setItem('animations', animations.toString());
     applyAnimations(animations);
+    onSuccess?.('animations');
   };
 
   // Listen for system theme changes
