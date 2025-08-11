@@ -4,10 +4,10 @@ import { query } from '@/lib/db';
 // PUT /api/projects/[id]/members/[userId] - Update member role
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string; userId: string } }
+  context: { params: { id: string; userId: string } }
 ) {
   try {
-    const { id, userId } = params;
+    const { id, userId } = context.params;
     const body = await request.json();
     const { role } = body;
 
@@ -74,10 +74,10 @@ export async function PUT(
 // DELETE /api/projects/[id]/members/[userId] - Remove member from project
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string; userId: string } }
+  context: { params: { id: string; userId: string } }
 ) {
   try {
-    const { id, userId } = params;
+    const { id, userId } = context.params;
 
     // Check if the member exists and get their role
     const memberCheck = await query(
