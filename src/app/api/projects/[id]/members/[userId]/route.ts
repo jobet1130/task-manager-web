@@ -73,7 +73,7 @@ export async function PUT(
 
 // DELETE /api/projects/[id]/members/[userId] - Remove member from project
 export async function DELETE(
-  request: NextRequest,
+  _: NextRequest,
   context: { params: { id: string; userId: string } }
 ) {
   try {
