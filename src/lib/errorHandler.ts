@@ -11,6 +11,11 @@ interface ErrorResponse {
   path?: string;
 }
 
+// Route context type for Next.js App Router
+interface RouteContext {
+  params?: Record<string, string | string[]>;
+}
+
 // Global error handler function
 export function handleError(error: unknown, request?: NextRequest): NextResponse {
   console.error('API Error:', error);
@@ -49,11 +54,37 @@ export function handleError(error: unknown, request?: NextRequest): NextResponse
   return NextResponse.json(errorResponse, { status: statusCode });
 }
 
-// Async wrapper for API route handlers
+// Simple wrapper for API route handlers without params
 export function withErrorHandler(
-  handler: (request: NextRequest, context?: Record<string, unknown>) => Promise<NextResponse>
+  handler: (request: NextRequest) => Promise<NextResponse>
 ) {
-  return async (request: NextRequest, context?: Record<string, unknown>): Promise<NextResponse> => {
+  return async (request: NextRequest): Promise<NextResponse> => {
+    try {
+      return await handler(request);
+    } catch (error) {
+      return handleError(error, request);
+    }
+  };
+}
+
+// Wrapper for API route handlers with context
+export function withErrorHandlerContext(
+  handler: (request: NextRequest, context: RouteContext) => Promise<NextResponse>
+) {
+  return async (request: NextRequest, context: RouteContext): Promise<NextResponse> => {
+    try {
+      return await handler(request, context);
+    } catch (error) {
+      return handleError(error, request);
+    }
+  };
+}
+
+// Async wrapper for API route handlers with params (Next.js 14+ compatible)
+export function withErrorHandlerParamsAsync<T>(
+  handler: (request: NextRequest, context: { params: Promise<T> }) => Promise<NextResponse>
+) {
+  return async (request: NextRequest, context: { params: Promise<T> }): Promise<NextResponse> => {
     try {
       return await handler(request, context);
     } catch (error) {
