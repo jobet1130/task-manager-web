@@ -1,14 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { query } from '@/lib/db';
 import { withErrorHandlerParams } from '@/lib/errorHandler';
-import {  NotFoundError } from '@/lib/exceptions';
+import { NotFoundError } from '@/lib/exceptions';
 
 // GET /api/profiles/[id] - Get a specific profile
 async function getProfile(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-    const { id } = params;
+    const { id } = await params;
 
     const result = await query(
       `SELECT id, email, full_name, avatar_url, created_at, updated_at
@@ -32,9 +32,9 @@ export const GET = withErrorHandlerParams(getProfile);
 // PUT /api/profiles/[id] - Update a profile
 async function updateProfile(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-    const { id } = params;
+    const { id } = await params;
     const body = await request.json();
     const { email, full_name, avatar_url } = body;
 
@@ -55,8 +55,7 @@ async function updateProfile(
 
     return NextResponse.json({
       success: true,
-      data: result.rows[0],
-      message: 'Profile updated successfully'
+      data: result.rows[0]
     });
 }
 
@@ -65,9 +64,9 @@ export const PUT = withErrorHandlerParams(updateProfile);
 // DELETE /api/profiles/[id] - Delete a profile
 async function deleteProfile(
   _request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-    const { id } = params;
+    const { id } = await params;
 
     const result = await query(
       `DELETE FROM profiles WHERE id = $1 RETURNING id`,
