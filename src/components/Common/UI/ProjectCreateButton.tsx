@@ -1,37 +1,43 @@
 'use client';
 
 import React, { useState } from 'react';
-import { CreateTaskModal } from '../../Modals/CreateTaskModal';
+import { CreateProjectModal } from '../../Modals/CreateProjectModal';
 import { SuccessModal } from '@/components/Modals/SuccessModal';
 import { ToastNotification } from '@/components/Modals/ToastNotification';
 import { Button } from './Button';
 
-interface TaskCreateButtonProps {
-  onTaskCreated?: () => void;
+interface ProjectCreateButtonProps {
+  onProjectCreated?: () => void;
   notificationType?: 'modal' | 'toast';
 }
 
-export const TaskCreateButton: React.FC<TaskCreateButtonProps> = ({ 
-  onTaskCreated,
+export const ProjectCreateButton: React.FC<ProjectCreateButtonProps> = ({ 
+  onProjectCreated,
   notificationType = 'toast'
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [showToast, setShowToast] = useState(false);
-  const [createdTaskTitle, setCreatedTaskTitle] = useState('');
+  const [createdProjectName, setCreatedProjectName] = useState('');
 
-  const handleCreateTask = async (taskData: { title: string; description?: string; dueDate?: Date }) => {
+  const handleCreateProject = async (projectData: { 
+    name: string; 
+    description: string; 
+    visibility: string; 
+    template: string; 
+    color: string; 
+  }) => {
     setLoading(true);
     try {
-      // Here you would typically call your API to create the task
-      console.log('Creating task:', taskData);
+      // Here you would typically call your API to create the project
+      console.log('Creating project:', projectData);
       
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
       
-      // Store the task title for the success message
-      setCreatedTaskTitle(taskData.title);
+      // Store the project name for the success message
+      setCreatedProjectName(projectData.name);
       
       // Show success notification based on type
       if (notificationType === 'modal') {
@@ -41,13 +47,13 @@ export const TaskCreateButton: React.FC<TaskCreateButtonProps> = ({
       }
       
       // Call the callback if provided
-      if (onTaskCreated) {
-        onTaskCreated();
+      if (onProjectCreated) {
+        onProjectCreated();
       }
       
-      console.log('Task created successfully!');
+      console.log('Project created successfully!');
     } catch (error) {
-      console.error('Error creating task:', error);
+      console.error('Error creating project:', error);
       throw error;
     } finally {
       setLoading(false);
@@ -58,22 +64,19 @@ export const TaskCreateButton: React.FC<TaskCreateButtonProps> = ({
     <>
       <Button
         onClick={() => setIsModalOpen(true)}
-        className="w-full h-12 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white border-0 shadow-lg flex items-center justify-center"
+        className="w-full h-12 bg-gradient-to-r from-green-500 to-blue-600 hover:from-green-600 hover:to-blue-700 text-white border-0 shadow-lg flex items-center justify-center"
       >
         <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
         </svg>
-        New Task
+        New Project
       </Button>
       
-      {/* Create Task Modal */}
-      <CreateTaskModal
+      {/* Create Project Modal */}
+      <CreateProjectModal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        onSubmit={(taskData) => handleCreateTask({
-          ...taskData,
-          dueDate: taskData.dueDate ? new Date(taskData.dueDate) : undefined
-        })}
+        onSubmit={handleCreateProject}
         loading={loading}
       />
       
@@ -81,8 +84,8 @@ export const TaskCreateButton: React.FC<TaskCreateButtonProps> = ({
       <SuccessModal
         isOpen={showSuccessModal}
         onClose={() => setShowSuccessModal(false)}
-        title="Task Created Successfully!"
-        message={`"${createdTaskTitle}" has been created and added to your project.`}
+        title="Project Created Successfully!"
+        message={`"${createdProjectName}" has been created and is ready for your team.`}
         autoClose={true}
         autoCloseDelay={4000}
       />
@@ -91,7 +94,7 @@ export const TaskCreateButton: React.FC<TaskCreateButtonProps> = ({
       <ToastNotification
         isVisible={showToast}
         onClose={() => setShowToast(false)}
-        message={`Task "${createdTaskTitle}" created successfully!`}
+        message={`Project "${createdProjectName}" created successfully!`}
         type="success"
         duration={4000}
         position="top-right"

@@ -4,15 +4,10 @@ import React from 'react';
 import { Card } from '@/components/Common/UI/Card';
 import { Button } from '@/components/Common/UI/Button';
 import { TaskCreateButton } from '@/components/Common/UI/TaskCreateButton';
+import { ProjectCreateButton } from '../Common/UI/ProjectCreateButton';
 
 export function QuickActions() {
   const actions = [
-    {
-      title: 'New Project',
-      description: 'Start a new project',
-      icon: '📁',
-      color: 'bg-green-500 hover:bg-green-600'
-    },
     {
       title: 'Invite Team',
       description: 'Add team members',
@@ -31,12 +26,21 @@ export function QuickActions() {
     <Card className="p-6">
       <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h3>
       <div className="space-y-3">
-        {/* Create Task Button - Now Functional */}
+        {/* Create Task Button - Functional */}
         <div className="w-full">
           <TaskCreateButton 
             onTaskCreated={() => {
               console.log('Task created from QuickActions!');
-              // You can add any additional logic here when a task is created
+            }}
+            notificationType="toast"
+          />
+        </div>
+        
+        {/* Create Project Button - Now Functional */}
+        <div className="w-full">
+          <ProjectCreateButton 
+            onProjectCreated={() => {
+              console.log('Project created from QuickActions!');
             }}
             notificationType="toast"
           />
