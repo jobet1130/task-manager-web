@@ -88,8 +88,26 @@ export default function RegisterPage() {
 
       const result = await response.json();
       
-      // Redirect to login page with success message
-      router.push('/login?message=Registration successful! Please sign in.');
+      // Use the result data for better user experience
+      console.log('Registration successful:', result);
+      
+      // You can use result data in various ways:
+      // 1. Show user info in success message
+      const successMessage = result.user 
+        ? `Registration successful! Welcome ${result.user.firstName || result.user.email}! Please sign in.`
+        : 'Registration successful! Please sign in.';
+      
+      // 2. Store user data temporarily if needed
+      if (result.user) {
+        sessionStorage.setItem('registeredUser', JSON.stringify({
+          email: result.user.email,
+          firstName: result.user.firstName,
+          lastName: result.user.lastName
+        }));
+      }
+      
+      // 3. Redirect with personalized message
+      router.push(`/login?message=${encodeURIComponent(successMessage)}`);
     } catch (err) {
       console.error('Registration error:', err);
       setError(err instanceof Error ? err.message : 'An error occurred during registration');
