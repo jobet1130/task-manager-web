@@ -38,7 +38,7 @@ export async function GET(
        LEFT JOIN profiles p ON c.user_id = p.id
        WHERE c.task_id = $1
        ORDER BY c.created_at ASC`,
-      [params.id]
+      [params.id, user.userId]
     );
 
     return NextResponse.json({ comments: result.rows });
