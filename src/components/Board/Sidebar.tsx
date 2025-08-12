@@ -16,7 +16,7 @@ const navigation = [
   { name: 'Tasks', href: '/tasks', icon: '✅' },
   { name: 'Projects', href: '/projects', icon: '📁' },
   { name: 'Calendar', href: '/calendar', icon: '📅' },
-  { name: 'Team', href: '/dashboard/team', icon: '👥' },
+  { name: 'Team', href: '/team', icon: '👥' },
   { name: 'Reports', href: '/dashboard/reports', icon: '📈' },
 ];
 
