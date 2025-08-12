@@ -20,6 +20,7 @@
     "react-dom": "19.1.0",
     "socket.io-client": "^4.8.1",
     "tailwind-merge": "^3.3.1",
+    "uuid": "^11.1.0",
     "zod": "^4.0.17"
   },
   "devDependencies": {
@@ -31,6 +32,7 @@
     "@types/pg": "^8.10.9",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/uuid": "^10.0.0",
     "eslint": "^9",
     "eslint-config-next": "15.4.6",
     "tailwindcss": "^4",
