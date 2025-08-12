@@ -11,9 +11,10 @@ const AddMemberSchema = z.object({
 // GET /api/projects/[id]/members - Get project members
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const user = await verifyAuth(request);
     if (!user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -26,7 +27,7 @@ export async function GET(
        UNION
        SELECT p.owner_id FROM projects p
        WHERE p.id = $1 AND p.owner_id = $2`,
-      [params.id, user.userId]
+      [id, user.userId]
     );
 
     if (projectAccess.rows.length === 0) {
@@ -39,7 +40,7 @@ export async function GET(
        LEFT JOIN profiles p ON pm.user_id = p.id
        WHERE pm.project_id = $1
        ORDER BY pm.role DESC, p.full_name ASC`,
-      [params.id]
+      [id]
     );
 
     return NextResponse.json({ members: result.rows });
@@ -55,9 +56,10 @@ export async function GET(
 // POST /api/projects/[id]/members - Add project member
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const user = await verifyAuth(request);
     if (!user) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
@@ -70,7 +72,7 @@ export async function POST(
        UNION
        SELECT 'owner' as role FROM projects p
        WHERE p.id = $1 AND p.owner_id = $2`,
-      [params.id, user.userId]
+      [id, user.userId]
     );
 
     if (permissionCheck.rows.length === 0) {
@@ -83,7 +85,7 @@ export async function POST(
     // Check if user is already a member
     const existingMember = await query(
       'SELECT id FROM project_members WHERE project_id = $1 AND user_id = $2',
-      [params.id, validatedData.user_id]
+      [id, validatedData.user_id]
     );
 
     if (existingMember.rows.length > 0) {
@@ -97,7 +99,7 @@ export async function POST(
       `INSERT INTO project_members (project_id, user_id, role, joined_at)
        VALUES ($1, $2, $3, NOW())
        RETURNING *`,
-      [params.id, validatedData.user_id, validatedData.role]
+      [id, validatedData.user_id, validatedData.role]
     );
 
     return NextResponse.json(result.rows[0], { status: 201 });
