@@ -19,13 +19,15 @@ export const TaskStatusDistribution: React.FC = () => {
   const [selectedStatus, setSelectedStatus] = useState<string | null>(null);
 
   const pendingTasks = Math.max(0, reportData.totalTasks - reportData.completedTasks - reportData.inProgressTasks - reportData.overdueTasks);
-  const total = reportData.totalTasks || 1; // Prevent division by zero
-
+  const total = reportData.totalTasks; // Use actual total
+  const safeTotal = total || 1; // Only use for calculations to prevent division by zero
+  
+  // Then update the percentage calculations to use safeTotal:
   const statusData: TaskStatusData[] = [
     {
       label: 'Completed',
       value: reportData.completedTasks,
-      percentage: (reportData.completedTasks / total) * 100,
+      percentage: (reportData.completedTasks / safeTotal) * 100,
       color: '#10b981',
       bgColor: 'bg-green-500',
       description: 'Tasks that have been successfully completed',
@@ -34,7 +36,7 @@ export const TaskStatusDistribution: React.FC = () => {
     {
       label: 'In Progress',
       value: reportData.inProgressTasks,
-      percentage: (reportData.inProgressTasks / total) * 100,
+      percentage: (reportData.inProgressTasks / safeTotal) * 100, // Changed from total to safeTotal
       color: '#3b82f6',
       bgColor: 'bg-blue-500',
       description: 'Tasks currently being worked on',
@@ -43,7 +45,7 @@ export const TaskStatusDistribution: React.FC = () => {
     {
       label: 'Pending',
       value: pendingTasks,
-      percentage: (pendingTasks / total) * 100,
+      percentage: (pendingTasks / safeTotal) * 100, // Changed from total to safeTotal
       color: '#9ca3af',
       bgColor: 'bg-gray-500',
       description: 'Tasks waiting to be started',
@@ -52,7 +54,7 @@ export const TaskStatusDistribution: React.FC = () => {
     {
       label: 'Overdue',
       value: reportData.overdueTasks,
-      percentage: (reportData.overdueTasks / total) * 100,
+      percentage: (reportData.overdueTasks / safeTotal) * 100, // Changed from total to safeTotal
       color: '#ef4444',
       bgColor: 'bg-red-500',
       description: 'Tasks that have passed their due date',
@@ -228,13 +230,13 @@ export const TaskStatusDistribution: React.FC = () => {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4 border-t border-white/10">
         <div className="text-center">
           <div className="text-lg font-bold text-green-400">
-            {((reportData.completedTasks / total) * 100).toFixed(1)}%
+            {((reportData.completedTasks / safeTotal) * 100).toFixed(1)}%
           </div>
           <div className="text-xs text-white/60">Completion Rate</div>
         </div>
         <div className="text-center">
           <div className="text-lg font-bold text-blue-400">
-            {((reportData.inProgressTasks / total) * 100).toFixed(1)}%
+            {((reportData.inProgressTasks / safeTotal) * 100).toFixed(1)}%
           </div>
           <div className="text-xs text-white/60">In Progress</div>
         </div>
