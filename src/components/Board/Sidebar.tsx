@@ -17,7 +17,7 @@ const navigation = [
   { name: 'Projects', href: '/projects', icon: '📁' },
   { name: 'Calendar', href: '/calendar', icon: '📅' },
   { name: 'Team', href: '/team', icon: '👥' },
-  { name: 'Reports', href: '/dashboard/reports', icon: '📈' },
+  { name: 'Reports', href: '/reports', icon: '📈' },
 ];
 
 export function Sidebar({ isOpen, onClose }: SidebarProps) {

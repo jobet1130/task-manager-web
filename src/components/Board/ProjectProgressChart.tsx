@@ -2,6 +2,17 @@
 
 import React from 'react';
 
+interface ReportData {
+  totalTasks: number;
+  completedTasks: number;
+  inProgressTasks: number;
+  overdueTasks: number;
+  totalProjects: number;
+  activeProjects: number;
+  teamMembers: number;
+  avgCompletionTime: number;
+}
+
 interface Project {
   id: string;
   name: string;
@@ -12,55 +23,13 @@ interface Project {
   dueDate: string;
 }
 
-export const ProjectProgressChart: React.FC = () => {
-  // Sample project data - in a real app, this would come from props or API
-  const projects: Project[] = [
-    {
-      id: '1',
-      name: 'TaskFlow Web App',
-      progress: 75,
-      totalTasks: 24,
-      completedTasks: 18,
-      color: '#3B82F6',
-      dueDate: 'Dec 31'
-    },
-    {
-      id: '2',
-      name: 'Mobile App',
-      progress: 45,
-      totalTasks: 16,
-      completedTasks: 7,
-      color: '#10B981',
-      dueDate: 'Jan 15'
-    },
-    {
-      id: '3',
-      name: 'API Documentation',
-      progress: 90,
-      totalTasks: 8,
-      completedTasks: 7,
-      color: '#F59E0B',
-      dueDate: 'Dec 20'
-    },
-    {
-      id: '4',
-      name: 'Testing Suite',
-      progress: 30,
-      totalTasks: 12,
-      completedTasks: 4,
-      color: '#8B5CF6',
-      dueDate: 'Jan 30'
-    },
-    {
-      id: '5',
-      name: 'UI/UX Design',
-      progress: 85,
-      totalTasks: 20,
-      completedTasks: 17,
-      color: '#EF4444',
-      dueDate: 'Dec 25'
-    }
-  ];
+interface ProjectProgressChartProps {
+  reportData?: ReportData;
+}
+
+export const ProjectProgressChart: React.FC<ProjectProgressChartProps> = ({ reportData }) => {
+  // Keep projects array empty as intended
+  const projects: Project[] = [];
 
   const getProgressStatus = (progress: number) => {
     if (progress >= 90) return { status: 'Excellent', color: 'text-green-400' };
@@ -69,9 +38,12 @@ export const ProjectProgressChart: React.FC = () => {
     return { status: 'Behind', color: 'text-red-400' };
   };
 
-  const averageProgress = Math.round(
-    projects.reduce((sum, project) => sum + project.progress, 0) / projects.length
-  );
+  // Use reportData for calculations when available
+  const averageProgress = reportData && reportData.totalProjects > 0 
+    ? Math.round((reportData.completedTasks / reportData.totalTasks) * 100)
+    : 0;
+
+  const activeProjects = reportData ? reportData.activeProjects : 0;
 
   return (
     <div className="space-y-6">
@@ -83,9 +55,17 @@ export const ProjectProgressChart: React.FC = () => {
         </div>
         <div className="text-white/80 text-right">
           <p className="text-sm">Active Projects</p>
-          <p className="text-2xl font-bold text-white">{projects.length}</p>
+          <p className="text-2xl font-bold text-white">{activeProjects}</p>
         </div>
       </div>
+
+      {/* Show "No Data" message when projects array is empty */}
+      {projects.length === 0 && (
+        <div className="text-center py-8 text-white/60">
+          <p className="text-lg">No project data available</p>
+          <p className="text-sm mt-2">Projects will appear here when data is loaded</p>
+        </div>
+      )}
 
       {/* Progress Bars */}
       <div className="space-y-4">
