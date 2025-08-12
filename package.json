@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.54.0",
     "@types/socket.io-client": "^1.4.36",
     "bcryptjs": "^3.0.2",
     "clsx": "^2.1.1",
