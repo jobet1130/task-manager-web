@@ -66,18 +66,18 @@ export default function NotFound() {
         {/* Glowing buttons */}
         <div className="space-y-4 mt-8 animate-fade-in-up animation-delay-600">
           <Link 
-            href="/"
+            href="/dashboard"
             className="inline-block bg-gradient-to-r from-cyan-500 to-purple-600 text-white px-8 py-3 rounded-lg hover:from-cyan-400 hover:to-purple-500 transition-all duration-300 transform hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/25 border border-cyan-400/30"
           >
-            🌍 Return to Earth
+            🌍 Return to Dashboard
           </Link>
           
           <div className="text-sm text-gray-400">
             <Link 
-              href="/"
+              href="/dashboard"
               className="text-cyan-400 hover:text-cyan-300 underline transition-colors duration-200 hover:no-underline"
             >
-              ← Navigate to Mission Control
+              ← Navigate to Dashboard
             </Link>
           </div>
         </div>

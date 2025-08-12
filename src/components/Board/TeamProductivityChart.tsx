@@ -135,7 +135,10 @@ export const TeamProductivityChart: React.FC = () => {
               <span>Needs Improvement (&lt;70%)</span>
             </div>
           </div>
-          <span>Right number shows tasks in progress</span>
+          <div className="flex items-center space-x-4">
+            <span>Peak daily performance: {maxTasks} tasks</span>
+            <span>Right number shows tasks in progress</span>
+          </div>
         </div>
       </div>
     </div>
