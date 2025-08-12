@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
@@ -13,16 +13,21 @@ interface SidebarProps {
 
 const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: '📊' },
-  { name: 'Tasks', href: '/dashboard/tasks', icon: '✅' },
-  { name: 'Projects', href: '/dashboard/projects', icon: '📁' },
-  { name: 'Calendar', href: '/dashboard/calendar', icon: '📅' },
-  { name: 'Team', href: '/dashboard/team', icon: '👥' },
+  { name: 'Tasks', href: '/tasks', icon: '✅' },
+  { name: 'Projects', href: '/projects', icon: '📁' },
+  { name: 'Calendar', href: '/calendar', icon: '📅' },
+  { name: 'Team', href: '/team', icon: '👥' },
   { name: 'Reports', href: '/dashboard/reports', icon: '📈' },
 ];
 
 export function Sidebar({ isOpen, onClose }: SidebarProps) {
   const pathname = usePathname();
   const { isDark } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <>
@@ -38,7 +43,8 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
             {/* Navigation */}
             <nav className="mt-8 flex-1 space-y-1 px-2">
               {navigation.map((item) => {
-                const isActive = pathname === item.href;
+                // Only calculate isActive after component is mounted to prevent hydration mismatch
+                const isActive = mounted ? pathname === item.href : false;
                 return (
                   <Link
                     key={item.name}
@@ -94,7 +100,8 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
             {/* Navigation */}
             <nav className="mt-8 flex-1 space-y-1 px-2">
               {navigation.map((item) => {
-                const isActive = pathname === item.href;
+                // Only calculate isActive after component is mounted to prevent hydration mismatch
+                const isActive = mounted ? pathname === item.href : false;
                 return (
                   <Link
                     key={item.name}
@@ -103,7 +110,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
                     className={cn(
                       'group flex items-center px-2 py-2 text-sm font-medium rounded-md transition-colors',
                       isActive
-                        ? `${isDark ? 'bg-gray-700 text-primary' : 'bg-secondary text-primary'}`
+                        ? `${isDark ? 'bg-gray-700 text-primary' : 'bg-secondary text-primary'} border-r-2 border-primary`
                         : `${isDark ? 'text-gray-300 hover:bg-gray-700 hover:text-white' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'}`
                     )}
                   >
@@ -116,6 +123,14 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
           </div>
         </div>
       </div>
+      
+      {/* Backdrop */}
+      {isOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-black bg-opacity-50 lg:hidden"
+          onClick={onClose}
+        />
+      )}
     </>
   );
 }

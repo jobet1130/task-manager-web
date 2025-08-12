@@ -81,7 +81,13 @@ export const PreferencesSettings: React.FC = () => {
   };
 
   // Function to detect time format based on locale
+  // Function to detect time format based on locale
   const detectTimeFormatByLocale = (): TimeFormat => {
+    // Check if we're on the client side
+    if (typeof window === 'undefined') {
+      return '12h'; // Default fallback for server-side rendering
+    }
+    
     const locale = navigator.language || navigator.languages?.[0] || 'en-US';
     
     // Create a test time and format it
