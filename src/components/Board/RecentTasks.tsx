@@ -57,7 +57,11 @@ export function RecentTasks() {
   const tasks: Task[] = []; // Empty tasks array
 
   return (
-    <Card className={`${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
+    <Card className={`${
+      isDark 
+        ? 'bg-gray-800 border-gray-700' 
+        : 'bg-white border-gray-200'
+    }`}>
       <div className="p-6">
         <h2 className={`text-lg font-semibold ${isDark ? 'text-white' : 'text-gray-900'}`}>Recent Tasks</h2>
         {tasks.length === 0 ? (

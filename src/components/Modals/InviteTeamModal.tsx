@@ -90,19 +90,15 @@ export const InviteTeamModal: React.FC<InviteTeamModalProps> = ({
         {/* Background Design */}
         <div className="absolute inset-0 -z-10">
           {/* Glassmorphism background */}
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-600/20 backdrop-blur-md rounded-2xl border border-blue-500/40 shadow-2xl" />
-          
-          {/* Animated gradient orbs */}
-          <div className="absolute -top-2 -left-2 w-16 h-16 bg-gradient-to-r from-blue-400/30 to-purple-500/30 rounded-full blur-xl animate-pulse" />
-          <div className="absolute -bottom-2 -right-2 w-20 h-20 bg-gradient-to-r from-purple-400/30 to-blue-500/30 rounded-full blur-xl animate-pulse" style={{ animationDelay: '1s' }} />
+          <div className="absolute inset-0 backdrop-blur-md rounded-2xl border border-blue-300/90 shadow-2xl" />
         </div>
         
         {/* Modal Content */}
-        <div className="relative z-10 bg-transparent p-6">
+        <div className="relative z-10 bg-gradient-to-br from-blue-900/90 to-purple-800/90 rounded-2xl p-6">
           {/* Header */}
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center space-x-3">
-              <div className="flex items-center justify-center w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm">
+              <div className="flex items-center justify-center w-10 h-10 rounded-full bg-white/30">
                 <svg className="w-5 h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" />
                 </svg>
@@ -124,7 +120,7 @@ export const InviteTeamModal: React.FC<InviteTeamModalProps> = ({
           <form onSubmit={handleSubmit} className="space-y-4">
             {/* Email Input */}
             <div>
-              <label className="block text-sm font-medium text-white/80 mb-2">
+              <label className="block text-sm font-medium text-white mb-2">
                 Email Address *
               </label>
               <Input
@@ -132,7 +128,7 @@ export const InviteTeamModal: React.FC<InviteTeamModalProps> = ({
                 value={formData.email}
                 onChange={(e) => handleInputChange('email', e.target.value)}
                 placeholder="Enter team member's email"
-                className={`w-full bg-white/10 border ${errors.email ? 'border-red-400' : 'border-white/20'} text-white placeholder-white/50`}
+                className={`w-full bg-white/25 border ${errors.email ? 'border-red-400' : 'border-white/50'} text-white placeholder-white/80`}
                 disabled={loading}
               />
               {errors.email && (
@@ -142,24 +138,63 @@ export const InviteTeamModal: React.FC<InviteTeamModalProps> = ({
 
             {/* Role Selection */}
             <div>
-              <label className="block text-sm font-medium text-white/80 mb-2">
+              <label className="block text-sm font-medium text-white mb-3">
                 Role
               </label>
-              <select
-                value={formData.role}
-                onChange={(e) => handleInputChange('role', e.target.value as 'admin' | 'member' | 'viewer')}
-                className="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                disabled={loading}
-              >
-                <option value="viewer" className="bg-gray-800 text-white">Viewer - Can view projects and tasks</option>
-                <option value="member" className="bg-gray-800 text-white">Member - Can create and edit tasks</option>
-                <option value="admin" className="bg-gray-800 text-white">Admin - Full access to project settings</option>
-              </select>
+              <div className="space-y-3">
+                <label className="flex items-center space-x-3 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="role"
+                    value="viewer"
+                    checked={formData.role === 'viewer'}
+                    onChange={(e) => handleInputChange('role', e.target.value)}
+                    className="w-4 h-4 text-blue-400 bg-white/20 border-white/40 focus:ring-blue-400 focus:ring-2"
+                    disabled={loading}
+                  />
+                  <div className="flex-1">
+                    <div className="text-white font-medium">👁️ Viewer</div>
+                    <div className="text-white/70 text-sm">Can view projects and tasks</div>
+                  </div>
+                </label>
+                
+                <label className="flex items-center space-x-3 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="role"
+                    value="member"
+                    checked={formData.role === 'member'}
+                    onChange={(e) => handleInputChange('role', e.target.value)}
+                    className="w-4 h-4 text-blue-400 bg-white/20 border-white/40 focus:ring-blue-400 focus:ring-2"
+                    disabled={loading}
+                  />
+                  <div className="flex-1">
+                    <div className="text-white font-medium">👤 Member</div>
+                    <div className="text-white/70 text-sm">Can create and edit tasks</div>
+                  </div>
+                </label>
+                
+                <label className="flex items-center space-x-3 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="role"
+                    value="admin"
+                    checked={formData.role === 'admin'}
+                    onChange={(e) => handleInputChange('role', e.target.value)}
+                    className="w-4 h-4 text-blue-400 bg-white/20 border-white/40 focus:ring-blue-400 focus:ring-2"
+                    disabled={loading}
+                  />
+                  <div className="flex-1">
+                    <div className="text-white font-medium">⚡ Admin</div>
+                    <div className="text-white/70 text-sm">Full access to project settings</div>
+                  </div>
+                </label>
+              </div>
             </div>
 
             {/* Optional Message */}
             <div>
-              <label className="block text-sm font-medium text-white/80 mb-2">
+              <label className="block text-sm font-medium text-white mb-2">
                 Personal Message (Optional)
               </label>
               <textarea
@@ -167,7 +202,7 @@ export const InviteTeamModal: React.FC<InviteTeamModalProps> = ({
                 onChange={(e) => handleInputChange('message', e.target.value)}
                 placeholder="Add a personal message to the invitation..."
                 rows={3}
-                className="w-full bg-white/10 border border-white/20 rounded-lg px-3 py-2 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                className="w-full bg-white/25 border border-white/50 rounded-lg px-3 py-2 text-white placeholder-white/80 focus:outline-none focus:ring-2 focus:ring-blue-300 focus:border-transparent resize-none"
                 disabled={loading}
               />
             </div>
@@ -178,7 +213,7 @@ export const InviteTeamModal: React.FC<InviteTeamModalProps> = ({
                 type="button"
                 onClick={onClose}
                 variant="outline"
-                className="flex-1 bg-white/10 border-white/20 text-white hover:bg-white/20"
+                className="flex-1 bg-white/25 border-white/50 text-white hover:bg-white/35"
                 disabled={loading}
               >
                 Cancel

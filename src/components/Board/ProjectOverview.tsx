@@ -21,7 +21,7 @@ function ProjectCard({ project }: { project: Project }) {
   
   return (
     <div className={`p-4 border rounded-lg hover:shadow-md transition-shadow ${
-      isDark ? 'border-gray-700 bg-gray-800' : 'border-gray-200 bg-white'
+      isDark ? 'border-transparent bg-transparent' : 'border-transparent bg-transparent'
     }`}>
       <div className="flex items-center justify-between mb-3">
         <div className="flex items-center space-x-3">
@@ -50,7 +50,7 @@ function ProjectCard({ project }: { project: Project }) {
           }`}>{project.progress}%</span>
         </div>
         <div className={`w-full rounded-full h-2 ${
-          isDark ? 'bg-gray-700' : 'bg-gray-200'
+          isDark ? 'bg-transparent border border-gray-600' : 'bg-transparent border border-gray-300'
         }`}>
           <div 
             className="h-2 rounded-full transition-all duration-300"
@@ -73,10 +73,14 @@ function ProjectCard({ project }: { project: Project }) {
 
 export function ProjectsOverview() {
   const { isDark } = useTheme();
-  const projects: Project[] = []; // Empty projects array
+  const projects: Project[] = [];
 
   return (
-    <Card className={isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}>
+    <Card className={`${
+      isDark 
+        ? 'bg-gray-800 border-gray-700' 
+        : 'bg-white border-gray-200'
+    }`}>
       <div className="p-6">
         <div className="flex items-center justify-between mb-4">
           <h3 className={`text-lg font-semibold ${

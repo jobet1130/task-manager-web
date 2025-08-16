@@ -110,30 +110,21 @@ export const CreateTaskModal: React.FC<CreateTaskModalProps> = ({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Backdrop */}
       <div 
-        className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+        className="absolute inset-0 bg-black/70 backdrop-blur-sm"
         onClick={onClose}
       />
       
-      {/* Modal */}
-      <div className="relative w-full max-w-2xl mx-auto max-h-[90vh] overflow-y-auto">
-        {/* Background Design */}
-        <div className="absolute inset-0 -z-10">
-          {/* Glassmorphism background */}
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-600/20 backdrop-blur-md rounded-2xl border border-white/20 shadow-2xl" />
-          
-          {/* Animated gradient orbs */}
-          <div className="absolute -top-2 -left-2 w-20 h-20 bg-gradient-to-r from-blue-400/30 to-cyan-500/30 rounded-full blur-xl animate-pulse" />
-          <div className="absolute -bottom-2 -right-2 w-24 h-24 bg-gradient-to-r from-purple-400/30 to-pink-500/30 rounded-full blur-xl animate-pulse" style={{ animationDelay: '1s' }} />
-        </div>
+      {/* Modal with no scroll bars */}
+      <div className="relative w-full max-w-2xl mx-auto max-h-[90vh] bg-gradient-to-br from-blue-500/90 to-purple-600/90 rounded-xl shadow-2xl border border-white/30 backdrop-blur-md">
         
         {/* Modal Content */}
-        <div className="relative z-10 bg-transparent p-6">
+        <div className="relative z-10 p-6 rounded-xl h-full flex flex-col">
           {/* Header */}
-          <div className="flex items-center justify-between mb-6">
+          <div className="flex items-center justify-between mb-6 flex-shrink-0">
             <h2 className="text-2xl font-bold text-white drop-shadow-lg">Create New Task</h2>
             <button
               onClick={onClose}
-              className="text-gray-300 hover:text-white transition-colors p-2 hover:bg-white/10 rounded-lg"
+              className="text-white hover:text-gray-200 transition-colors p-2 hover:bg-white/20 rounded-lg"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -142,10 +133,10 @@ export const CreateTaskModal: React.FC<CreateTaskModalProps> = ({
           </div>
           
           {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-4 flex-1 min-h-0">
             {/* Task Title */}
             <div>
-              <label className="block text-sm font-medium text-gray-200 mb-2">
+              <label className="block text-sm font-medium text-white mb-2">
                 Task Title *
               </label>
               <Input
@@ -155,26 +146,26 @@ export const CreateTaskModal: React.FC<CreateTaskModalProps> = ({
                 onChange={handleInputChange('title')}
                 error={errors.title}
                 transparent={true}
-                className="bg-white/5 border-white/20 focus:border-white/40 focus:ring-white/20"
+                className="bg-white/25 border-white/50 focus:border-white/80 focus:ring-white/60 text-white placeholder-gray-200 text-base h-10"
               />
             </div>
 
             {/* Task Description */}
             <div>
-              <label className="block text-sm font-medium text-gray-200 mb-2">
+              <label className="block text-sm font-medium text-white mb-2">
                 Description *
               </label>
               <textarea
                 placeholder="Enter task description"
                 value={formData.description}
                 onChange={handleInputChange('description')}
-                rows={4}
-                className={`w-full px-4 py-3 bg-white/5 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:border-white/40 focus:ring-2 focus:ring-white/20 focus:outline-none transition-all backdrop-blur-sm resize-none ${
+                rows={3}
+                className={`w-full px-4 py-3 bg-white/25 border border-white/50 rounded-lg text-white placeholder-gray-200 focus:border-white/80 focus:ring-2 focus:ring-white/60 focus:outline-none transition-all resize-none text-base ${
                   errors.description ? 'border-red-400 focus:border-red-400 focus:ring-red-400/20' : ''
                 }`}
               />
               {errors.description && (
-                <p className="mt-1 text-sm text-red-400">{errors.description}</p>
+                <p className="mt-1 text-sm text-red-300">{errors.description}</p>
               )}
             </div>
 
@@ -182,24 +173,24 @@ export const CreateTaskModal: React.FC<CreateTaskModalProps> = ({
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Priority */}
               <div>
-                <label className="block text-sm font-medium text-gray-200 mb-2">
+                <label className="block text-sm font-medium text-white mb-2">
                   Priority
                 </label>
                 <select
                   value={formData.priority}
                   onChange={handleInputChange('priority')}
-                  className="w-full px-4 py-3 bg-white/5 border border-white/20 rounded-lg text-white focus:border-white/40 focus:ring-2 focus:ring-white/20 focus:outline-none transition-all backdrop-blur-sm"
+                  className="w-full px-4 py-3 bg-white/25 border border-white/50 rounded-lg text-white focus:border-white/80 focus:ring-2 focus:ring-white/60 focus:outline-none transition-all text-base h-10"
                 >
-                  <option value="low" className="bg-gray-800">🟢 Low</option>
-                  <option value="medium" className="bg-gray-800">🟡 Medium</option>
-                  <option value="high" className="bg-gray-800">🟠 High</option>
-                  <option value="urgent" className="bg-gray-800">🔴 Urgent</option>
+                  <option value="low" className="bg-purple-800 text-white">🟢 Low</option>
+                  <option value="medium" className="bg-purple-800 text-white">🟡 Medium</option>
+                  <option value="high" className="bg-purple-800 text-white">🟠 High</option>
+                  <option value="urgent" className="bg-purple-800 text-white">🔴 Urgent</option>
                 </select>
               </div>
 
               {/* Due Date */}
               <div>
-                <label className="block text-sm font-medium text-gray-200 mb-2">
+                <label className="block text-sm font-medium text-white mb-2">
                   Due Date
                 </label>
                 <Input
@@ -207,7 +198,7 @@ export const CreateTaskModal: React.FC<CreateTaskModalProps> = ({
                   value={formData.dueDate}
                   onChange={handleInputChange('dueDate')}
                   transparent={true}
-                  className="bg-white/5 border-white/20 focus:border-white/40 focus:ring-white/20"
+                  className="bg-white/25 border-white/50 focus:border-white/80 focus:ring-white/60 text-white text-base h-10"
                 />
               </div>
             </div>
@@ -216,7 +207,7 @@ export const CreateTaskModal: React.FC<CreateTaskModalProps> = ({
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* Assigned To */}
               <div>
-                <label className="block text-sm font-medium text-gray-200 mb-2">
+                <label className="block text-sm font-medium text-white mb-2">
                   Assigned To
                 </label>
                 <Input
@@ -225,13 +216,13 @@ export const CreateTaskModal: React.FC<CreateTaskModalProps> = ({
                   value={formData.assignedTo}
                   onChange={handleInputChange('assignedTo')}
                   transparent={true}
-                  className="bg-white/5 border-white/20 focus:border-white/40 focus:ring-white/20"
+                  className="bg-white/25 border-white/50 focus:border-white/80 focus:ring-white/60 text-white placeholder-gray-200 text-base h-10"
                 />
               </div>
 
               {/* Project */}
               <div>
-                <label className="block text-sm font-medium text-gray-200 mb-2">
+                <label className="block text-sm font-medium text-white mb-2">
                   Project
                 </label>
                 <Input
@@ -240,17 +231,17 @@ export const CreateTaskModal: React.FC<CreateTaskModalProps> = ({
                   value={formData.project}
                   onChange={handleInputChange('project')}
                   transparent={true}
-                  className="bg-white/5 border-white/20 focus:border-white/40 focus:ring-white/20"
+                  className="bg-white/25 border-white/50 focus:border-white/80 focus:ring-white/60 text-white placeholder-gray-200 text-base h-10"
                 />
               </div>
             </div>
 
             {/* Tags */}
             <div>
-              <label className="block text-sm font-medium text-gray-200 mb-2">
+              <label className="block text-sm font-medium text-white mb-2">
                 Tags
               </label>
-              <div className="flex gap-2 mb-2">
+              <div className="flex gap-3 mb-3">
                 <Input
                   type="text"
                   placeholder="Add a tag"
@@ -258,12 +249,12 @@ export const CreateTaskModal: React.FC<CreateTaskModalProps> = ({
                   onChange={(e) => setTagInput(e.target.value)}
                   onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), handleAddTag())}
                   transparent={true}
-                  className="flex-1 bg-white/5 border-white/20 focus:border-white/40 focus:ring-white/20"
+                  className="flex-1 bg-white/25 border-white/50 focus:border-white/80 focus:ring-white/60 text-white placeholder-gray-200 text-base h-10"
                 />
                 <Button
                   type="button"
                   onClick={handleAddTag}
-                  className="px-4 py-2 bg-white/10 hover:bg-white/20 border border-white/30 text-white"
+                  className="px-4 py-2 bg-white/30 hover:bg-white/40 border border-white/60 text-white text-sm font-medium h-10"
                 >
                   Add
                 </Button>
@@ -273,13 +264,13 @@ export const CreateTaskModal: React.FC<CreateTaskModalProps> = ({
                   {formData.tags.map((tag, index) => (
                     <span
                       key={index}
-                      className="inline-flex items-center px-3 py-1 bg-blue-500/20 text-blue-200 rounded-full text-sm border border-blue-400/30"
+                      className="inline-flex items-center px-3 py-1 bg-blue-500/30 text-blue-100 rounded-full text-sm border border-blue-400/40"
                     >
                       {tag}
                       <button
                         type="button"
                         onClick={() => handleRemoveTag(tag)}
-                        className="ml-2 text-blue-300 hover:text-blue-100"
+                        className="ml-2 text-blue-200 hover:text-blue-100"
                       >
                         ×
                       </button>
@@ -290,18 +281,18 @@ export const CreateTaskModal: React.FC<CreateTaskModalProps> = ({
             </div>
             
             {/* Actions */}
-            <div className="flex justify-end space-x-3 pt-4">
+            <div className="flex justify-end space-x-4 pt-4 flex-shrink-0">
               <Button
                 type="button"
                 onClick={onClose}
-                className="px-6 py-2 bg-white/10 hover:bg-white/20 border border-white/30 text-white"
+                className="px-6 py-2 bg-white/30 hover:bg-white/40 border border-white/60 text-white text-sm font-medium h-10"
               >
                 Cancel
               </Button>
               <Button
                 type="submit"
                 loading={loading}
-                className="px-6 py-2 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 border-0 text-white"
+                className="px-6 py-2 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 border-0 text-white text-sm font-medium h-10"
               >
                 Create Task
               </Button>

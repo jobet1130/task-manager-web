@@ -33,7 +33,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
     <>
       {/* Desktop sidebar */}
       <div className="hidden lg:fixed lg:inset-y-0 lg:flex lg:w-64 lg:flex-col">
-        <div className={`flex min-h-0 flex-1 flex-col ${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'} border-r`}>
+        <div className="flex min-h-0 flex-1 flex-col bg-transparent">
           <div className="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
             {/* Logo */}
             <div className="flex flex-shrink-0 items-center px-4">
@@ -52,8 +52,8 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
                     className={cn(
                       'group flex items-center px-2 py-2 text-sm font-medium rounded-md transition-colors',
                       isActive
-                        ? `${isDark ? 'bg-gray-700 text-primary' : 'bg-secondary text-primary'} border-r-2 border-primary`
-                        : `${isDark ? 'text-gray-300 hover:bg-gray-700 hover:text-white' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'}`
+                        ? `bg-transparent text-primary`
+                        : `${isDark ? 'text-gray-300 hover:bg-transparent hover:text-white' : 'text-gray-600 hover:bg-transparent hover:text-gray-900'}`
                     )}
                   >
                     <span className="mr-3 text-lg">{item.icon}</span>
@@ -65,7 +65,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
           </div>
           
           {/* User section */}
-          <div className={`flex flex-shrink-0 ${isDark ? 'border-gray-700' : 'border-gray-200'} border-t p-4`}>
+          <div className="flex flex-shrink-0 p-4">
             <div className="flex items-center">
               <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center">
                 <span className="text-white text-sm font-medium">U</span>
@@ -81,10 +81,10 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
       
       {/* Mobile sidebar */}
       <div className={cn(
-        `fixed inset-y-0 left-0 z-50 w-64 ${isDark ? 'bg-gray-800' : 'bg-white'} transform transition-transform duration-300 ease-in-out lg:hidden`,
+        `fixed inset-y-0 left-0 z-50 w-64 bg-transparent transform transition-transform duration-300 ease-in-out lg:hidden`,
         isOpen ? 'translate-x-0' : '-translate-x-full'
       )}>
-        <div className={`flex min-h-0 flex-1 flex-col ${isDark ? 'border-gray-700' : 'border-gray-200'} border-r`}>
+        <div className="flex min-h-0 flex-1 flex-col">
           <div className="flex flex-1 flex-col overflow-y-auto pt-5 pb-4">
             {/* Mobile header */}
             <div className="flex items-center justify-between px-4">
@@ -110,8 +110,8 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
                     className={cn(
                       'group flex items-center px-2 py-2 text-sm font-medium rounded-md transition-colors',
                       isActive
-                        ? `${isDark ? 'bg-gray-700 text-primary' : 'bg-secondary text-primary'} border-r-2 border-primary`
-                        : `${isDark ? 'text-gray-300 hover:bg-gray-700 hover:text-white' : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'}`
+                        ? `bg-transparent text-primary`
+                        : `${isDark ? 'text-gray-300 hover:bg-transparent hover:text-white' : 'text-gray-600 hover:bg-transparent hover:text-gray-900'}`
                     )}
                   >
                     <span className="mr-3 text-lg">{item.icon}</span>

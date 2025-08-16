@@ -119,15 +119,11 @@ export const ExportReportModal: React.FC<ExportReportModalProps> = ({
         {/* Background Design */}
         <div className="absolute inset-0 -z-10">
           {/* Glassmorphism background */}
-          <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 to-red-600/20 backdrop-blur-md rounded-2xl border border-orange-500/40 shadow-2xl" />
-          
-          {/* Animated gradient orbs */}
-          <div className="absolute -top-2 -left-2 w-20 h-20 bg-gradient-to-r from-orange-400/30 to-red-500/30 rounded-full blur-xl animate-pulse" />
-          <div className="absolute -bottom-2 -right-2 w-24 h-24 bg-gradient-to-r from-red-400/30 to-orange-500/30 rounded-full blur-xl animate-pulse" style={{ animationDelay: '1s' }} />
+          <div className="absolute inset-0 backdrop-blur-md rounded-2xl border border-orange-500/40 shadow-2xl" />
         </div>
         
         {/* Modal Content */}
-        <div className="relative z-10 bg-transparent p-6">
+        <div className="relative z-10 bg-gradient-to-br from-orange-500/20 to-red-600/20 rounded-2xl p-6">
           {/* Header */}
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center space-x-3">

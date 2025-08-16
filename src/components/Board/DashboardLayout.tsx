@@ -15,7 +15,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
   const { accentColor, fontSize, animations } = settings;
 
   return (
-    <div className={`min-h-screen ${isDark ? 'bg-gray-900' : 'bg-gray-50'} accent-${accentColor} ${fontSize === 'small' ? 'text-sm' : fontSize === 'large' ? 'text-lg' : 'text-base'} ${!animations ? 'no-animations' : ''}`}>
+    <div className={`min-h-screen ${isDark ? 'bg-transparent' : 'bg-transparent'} accent-${accentColor} ${fontSize === 'small' ? 'text-sm' : fontSize === 'large' ? 'text-lg' : 'text-base'} ${!animations ? 'no-animations' : ''}`}>
       {/* Mobile sidebar overlay */}
       {sidebarOpen && (
         <div 

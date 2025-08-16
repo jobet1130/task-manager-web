@@ -13,6 +13,7 @@
     "@types/socket.io-client": "^1.4.36",
     "bcryptjs": "^3.0.2",
     "clsx": "^2.1.1",
+    "firebase": "^12.1.0",
     "jsonwebtoken": "^9.0.2",
     "next": "15.4.6",
     "next-auth": "^4.24.11",

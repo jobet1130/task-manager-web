@@ -119,13 +119,8 @@ export const ToastNotification: React.FC<ToastNotificationProps> = ({
       isAnimating ? 'translate-y-0 opacity-100' : 'translate-y-2 opacity-0'
     }`}>
       <div className="relative max-w-sm">
-        {/* Background */}
-        <div className="absolute inset-0 -z-10">
-          <div className={`absolute inset-0 bg-gradient-to-br ${styles.bg} backdrop-blur-md rounded-lg border shadow-lg`} />
-        </div>
-        
         {/* Content */}
-        <div className="relative z-10 p-4 flex items-center space-x-3">
+        <div className={`relative z-10 bg-gradient-to-br ${styles.bg} backdrop-blur-md rounded-lg border shadow-lg p-4 flex items-center space-x-3`}>
           {/* Icon */}
           <div className="flex-shrink-0">
             {getIcon()}

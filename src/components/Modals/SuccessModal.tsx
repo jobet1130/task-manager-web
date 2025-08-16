@@ -41,18 +41,8 @@ export const SuccessModal: React.FC<SuccessModalProps> = ({
       
       {/* Modal */}
       <div className="relative w-full max-w-md mx-auto">
-        {/* Background Design */}
-        <div className="absolute inset-0 -z-10">
-          {/* Glassmorphism background */}
-          <div className="absolute inset-0 bg-gradient-to-br from-green-500/20 to-emerald-600/20 backdrop-blur-md rounded-2xl border border-green-400/30 shadow-2xl" />
-          
-          {/* Animated gradient orbs */}
-          <div className="absolute -top-2 -left-2 w-16 h-16 bg-gradient-to-r from-green-400/30 to-emerald-500/30 rounded-full blur-xl animate-pulse" />
-          <div className="absolute -bottom-2 -right-2 w-20 h-20 bg-gradient-to-r from-emerald-400/30 to-green-500/30 rounded-full blur-xl animate-pulse" style={{ animationDelay: '1s' }} />
-        </div>
-        
         {/* Modal Content */}
-        <div className="relative z-10 bg-transparent p-6">
+        <div className="relative z-10 bg-gradient-to-br from-green-500/20 to-emerald-600/20 backdrop-blur-md rounded-2xl border border-green-400/30 shadow-2xl p-6">
           <div className="text-center">
             {/* Success Icon with Animation */}
             <div className="mx-auto flex items-center justify-center w-16 h-16 rounded-full bg-green-500/20 backdrop-blur-sm mb-4 animate-bounce">

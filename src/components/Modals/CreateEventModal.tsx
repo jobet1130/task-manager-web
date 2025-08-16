@@ -162,46 +162,6 @@ export const CreateEventModal: React.FC<CreateEventModalProps> = ({
     }));
   };
 
-  // Remove this entire duplicate useEffect block (lines 166-204)
-  // useEffect(() => {
-  //   if (isEditMode && initialData) {
-  //     setFormData({
-  //       title: initialData.title,
-  //       description: initialData.description || '',
-  //       startDate: initialData.startDate,
-  //       endDate: initialData.endDate,
-  //       startTime: initialData.startTime || '',
-  //       endTime: initialData.endTime || '',
-  //       type: initialData.type,
-  //       priority: initialData.priority,
-  //       status: initialData.status,
-  //       location: initialData.location || '',
-  //       attendees: initialData.attendees,
-  //       isAllDay: initialData.isAllDay,
-  //       recurrence: initialData.recurrence || 'none'
-  //     });
-  //     setAttendeeInput('');
-  //   } else if (!isEditMode) {
-  //     // Reset form for create mode
-  //     setFormData({
-  //       title: '',
-  //       description: '',
-  //       startDate: '',
-  //       endDate: '',
-  //       startTime: '',
-  //       endTime: '',
-  //       type: 'meeting',
-  //       priority: 'medium',
-  //       status: 'scheduled',
-  //       location: '',
-  //       attendees: [],
-  //       isAllDay: false,
-  //       recurrence: 'none'
-  //     });
-  //     setAttendeeInput('');
-  //   }
-  // }, [isEditMode, initialData]);
-
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Backdrop */}
@@ -215,15 +175,11 @@ export const CreateEventModal: React.FC<CreateEventModalProps> = ({
         {/* Background Design */}
         <div className="absolute inset-0 -z-10">
           {/* Glassmorphism background */}
-          <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 to-blue-600/20 backdrop-blur-md rounded-2xl border border-white/20 shadow-2xl" />
-          
-          {/* Animated gradient orbs */}
-          <div className="absolute -top-2 -left-2 w-20 h-20 bg-gradient-to-r from-purple-400/30 to-pink-500/30 rounded-full blur-xl animate-pulse" />
-          <div className="absolute -bottom-2 -right-2 w-24 h-24 bg-gradient-to-r from-blue-400/30 to-cyan-500/30 rounded-full blur-xl animate-pulse" style={{ animationDelay: '1s' }} />
+          <div className="absolute inset-0 backdrop-blur-md rounded-2xl border border-white/20 shadow-2xl" />
         </div>
         
         {/* Modal Content */}
-        <div className="relative z-10 bg-transparent p-6">
+        <div className="relative z-10 bg-gradient-to-br from-purple-500/20 to-blue-600/20 rounded-2xl p-6">
           {/* Header */}
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-2xl font-bold text-white drop-shadow-lg">

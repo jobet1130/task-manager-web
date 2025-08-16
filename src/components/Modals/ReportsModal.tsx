@@ -31,7 +31,7 @@ export const ReportsModal: React.FC<ReportsModalProps> = ({
         {/* Background Design */}
         <div className="absolute inset-0 -z-10">
           {/* Glassmorphism background */}
-          <div className="absolute inset-0 bg-gradient-to-br from-orange-500/20 to-red-600/20 backdrop-blur-md rounded-2xl border border-orange-500/40 shadow-2xl" />
+          <div className="absolute inset-0 backdrop-blur-md rounded-2xl border border-orange-500/40 shadow-2xl" />
           
           {/* Animated gradient orbs */}
           <div className="absolute -top-2 -left-2 w-16 h-16 bg-gradient-to-r from-orange-400/30 to-red-500/30 rounded-full blur-xl animate-pulse" />
@@ -39,7 +39,7 @@ export const ReportsModal: React.FC<ReportsModalProps> = ({
         </div>
         
         {/* Modal Content */}
-        <div className="relative z-10 bg-transparent h-full flex flex-col">
+        <div className="relative z-10 bg-gradient-to-br from-orange-500/20 to-red-600/20 rounded-2xl h-full flex flex-col">
           {/* Header */}
           <div className="flex items-center justify-between p-6 border-b border-white/20">
             <div className="flex items-center space-x-3">

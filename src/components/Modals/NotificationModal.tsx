@@ -119,15 +119,11 @@ export const NotificationModal: React.FC<NotificationModalProps> = ({
         {/* Background Design */}
         <div className="absolute inset-0 -z-10">
           {/* Glassmorphism background */}
-          <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 to-purple-600/20 backdrop-blur-md rounded-2xl border border-blue-500/40 shadow-2xl" />
-          
-          {/* Animated gradient orbs */}
-          <div className="absolute -top-2 -left-2 w-16 h-16 bg-gradient-to-r from-blue-400/30 to-purple-500/30 rounded-full blur-xl animate-pulse" />
-          <div className="absolute -bottom-2 -right-2 w-20 h-20 bg-gradient-to-r from-purple-400/30 to-blue-500/30 rounded-full blur-xl animate-pulse" style={{ animationDelay: '1s' }} />
+          <div className="absolute inset-0 backdrop-blur-md rounded-2xl border border-blue-500/40 shadow-2xl" />
         </div>
         
         {/* Modal Content */}
-        <div className="relative z-10 bg-transparent max-h-[80vh] flex flex-col">
+        <div className="relative z-10 bg-gradient-to-br from-blue-500/20 to-purple-600/20 rounded-2xl max-h-[80vh] flex flex-col">
           {/* Header */}
           <div className="flex items-center justify-between p-6 border-b border-white/20">
             <div className="flex items-center space-x-3">

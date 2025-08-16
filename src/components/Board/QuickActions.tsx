@@ -12,7 +12,7 @@ export function QuickActions() {
   const { isDark } = useTheme();
   
   return (
-    <Card className={isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}>
+    <Card className={`${isDark ? 'bg-gray-800 border-gray-700' : 'bg-white border-gray-200'}`}>
       <div className="p-6">
         <h3 className={`text-lg font-semibold mb-4 ${
           isDark ? 'text-white' : 'text-gray-900'
